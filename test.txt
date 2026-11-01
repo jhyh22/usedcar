@@ -1,684 +1,522 @@
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NSTUDY | NCS 취업교육 전문 아카데미</title>
-<meta name="description" content="NSTUDY - NCS 필기부터 공기업·대기업 취업까지 체계적으로 준비하는 취업교육 전문 아카데미">
+<title>로또 번호 추천</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-    font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif;
-    color:#18212f;
-    line-height:1.6;
-    background:#fff;
-}
-a{text-decoration:none;color:inherit}
-img{width:100%;display:block}
-.container{width:min(1200px,92%);margin:auto}
-
-/* TOP */
-.topbar{
-    background:#101828;
-    color:#fff;
-    font-size:13px;
-    padding:8px 0;
-}
-.topbar .container{
-    display:flex;
-    justify-content:space-between;
+* {
+    box-sizing: border-box;
 }
 
-/* HEADER */
-header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:#fff;
-    border-bottom:1px solid #e8edf3;
-}
-.nav{
-    height:78px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-.logo{
-    display:flex;
-    align-items:center;
-    width:210px;
-    height:56px;
-}
-.logo img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    object-position:left center;
-}
-nav{
-    display:flex;
-    gap:34px;
-    font-size:15px;
-    font-weight:700;
-}
-nav a:hover{color:#1769e0}
-.nav-btn{
-    background:#1769e0;
-    color:#fff;
-    padding:12px 20px;
-    border-radius:6px;
+body {
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    color: #222;
 }
 
-/* HERO */
-.hero{
-    min-height:650px;
-    position:relative;
-    display:flex;
-    align-items:center;
-    color:#fff;
-    background:
-    linear-gradient(90deg,rgba(5,18,40,.88),rgba(5,18,40,.48),rgba(5,18,40,.18)),
-    url("https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg")
-    center/cover no-repeat;
-}
-.hero-content{max-width:720px}
-.hero-small{
-    display:inline-block;
-    border:1px solid rgba(255,255,255,.45);
-    padding:7px 15px;
-    border-radius:30px;
-    margin-bottom:22px;
-    font-size:14px;
-}
-.hero h1{
-    font-size:clamp(38px,5vw,68px);
-    line-height:1.12;
-    letter-spacing:-3px;
-    margin-bottom:25px;
-}
-.hero h1 span{color:#62b0ff}
-.hero p{
-    font-size:20px;
-    color:#e8eef7;
-    margin-bottom:35px;
-}
-.hero-buttons{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-}
-.btn{
-    display:inline-block;
-    padding:15px 28px;
-    border-radius:6px;
-    font-weight:800;
-}
-.btn-primary{background:#1769e0;color:#fff}
-.btn-white{background:#fff;color:#18212f}
-
-/* TRUST */
-.trust{
-    background:#f5f8fc;
-    padding:28px 0;
-}
-.trust-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    text-align:center;
-}
-.trust strong{
-    display:block;
-    font-size:22px;
-    margin-bottom:3px;
-}
-.trust span{font-size:13px;color:#657184}
-
-/* SECTION */
-section{padding:100px 0}
-.section-head{
-    text-align:center;
-    max-width:760px;
-    margin:0 auto 55px;
-}
-.section-label{
-    color:#1769e0;
-    font-size:13px;
-    font-weight:900;
-    letter-spacing:2px;
-    margin-bottom:10px;
-}
-.section-head h2{
-    font-size:42px;
-    letter-spacing:-2px;
-    margin-bottom:15px;
-}
-.section-head p{color:#687487}
-
-/* ABOUT */
-.about{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:70px;
-    align-items:center;
-}
-.about-img{
-    height:500px;
-    border-radius:14px;
-    overflow:hidden;
-}
-.about-img img{
-    height:100%;
-    object-fit:cover;
-}
-.about-text h2{
-    font-size:40px;
-    line-height:1.25;
-    margin-bottom:25px;
-}
-.about-text p{
-    color:#667085;
-    margin-bottom:25px;
-}
-.check{
-    list-style:none;
-}
-.check li{
-    margin:14px 0;
-    font-weight:700;
-}
-.check li::before{
-    content:"✓";
-    color:#1769e0;
-    font-weight:900;
-    margin-right:10px;
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px 25px;
+    border-radius: 25px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+    text-align: center;
 }
 
-/* PROGRAM */
-.programs{
-    background:#f6f8fb;
-}
-.program-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:22px;
-}
-.card{
-    background:#fff;
-    border:1px solid #e5eaf0;
-    border-radius:12px;
-    overflow:hidden;
-    transition:.25s;
-}
-.card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 18px 40px rgba(20,40,80,.1);
-}
-.card-img{height:220px}
-.card-img img{height:100%;object-fit:cover}
-.card-body{padding:28px}
-.card-body h3{
-    font-size:22px;
-    margin-bottom:10px;
-}
-.card-body p{
-    color:#6b7280;
-    font-size:14px;
+h1 {
+    margin: 0 0 12px;
+    font-size: 38px;
+    font-weight: 800;
 }
 
-/* CLASSROOM */
-.class-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-}
-.class-card{
-    position:relative;
-    height:390px;
-    border-radius:12px;
-    overflow:hidden;
-}
-.class-card img{
-    height:100%;
-    object-fit:cover;
-    transition:.5s;
-}
-.class-card:hover img{transform:scale(1.06)}
-.class-overlay{
-    position:absolute;
-    inset:auto 0 0;
-    padding:70px 22px 22px;
-    color:#fff;
-    background:linear-gradient(transparent,rgba(0,0,0,.85));
-}
-.class-overlay small{opacity:.8}
-.class-overlay h3{font-size:21px}
-
-/* PROCESS */
-.process{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:15px;
-}
-.process-item{
-    text-align:center;
-    padding:30px 15px;
-    border:1px solid #e6ebf1;
-    border-radius:10px;
-}
-.process-number{
-    width:48px;
-    height:48px;
-    margin:0 auto 18px;
-    border-radius:50%;
-    background:#1769e0;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:900;
-}
-.process-item h3{font-size:17px;margin-bottom:8px}
-.process-item p{font-size:13px;color:#70798a}
-
-/* GALLERY */
-.gallery{
-    background:#f6f8fb;
-}
-.gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-.gallery-item{
-    height:270px;
-    border-radius:10px;
-    overflow:hidden;
-}
-.gallery-item img{
-    height:100%;
-    object-fit:cover;
-    transition:.4s;
-}
-.gallery-item:hover img{transform:scale(1.05)}
-
-/* SYSTEM */
-.system-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
-}
-.system-box{
-    padding:35px;
-    border:1px solid #e4e9ef;
-    border-radius:12px;
-}
-.system-box h3{
-    font-size:23px;
-    margin-bottom:12px;
-}
-.system-box p{color:#697586}
-
-/* DIRECTOR */
-.director{
-    background:#101828;
-    color:#fff;
-}
-.director-grid{
-    display:grid;
-    grid-template-columns:1fr 1.3fr;
-    gap:60px;
-    align-items:center;
-}
-.director-img{
-    height:500px;
-    border-radius:12px;
-    overflow:hidden;
-}
-.director-img img{
-    height:100%;
-    object-fit:cover;
-}
-.director-text h2{
-    font-size:42px;
-    line-height:1.25;
-    margin-bottom:25px;
-}
-.director-text p{
-    color:#c3ccd9;
-    margin-bottom:25px;
+.description {
+    margin: 0 0 30px;
+    color: #666;
+    font-size: 16px;
 }
 
-/* CTA */
-.cta{
-    background:#1769e0;
-    color:#fff;
-    text-align:center;
-}
-.cta h2{
-    font-size:42px;
-    margin-bottom:15px;
-}
-.cta p{
-    opacity:.9;
-    margin-bottom:30px;
-}
-.phone{
-    font-size:38px;
-    font-weight:900;
+.lotto-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* FOOTER */
-footer{
-    background:#0b1220;
-    color:#aab4c3;
-    padding:50px 0;
-}
-.footer-grid{
-    display:grid;
-    grid-template-columns:1.5fr 1fr 1fr;
-    gap:50px;
-}
-footer h3{
-    color:#fff;
-    margin-bottom:15px;
-}
-.footer-logo-wrap{
-    width:190px;
-    margin-bottom:15px;
-}
-.footer-logo{
-    width:100%;
-    height:auto;
-    display:block;
-}
-footer p{font-size:13px;margin:5px 0}
-
-/* MOBILE */
-@media(max-width:900px){
-    nav{display:none}
-    .trust-grid{grid-template-columns:repeat(2,1fr);gap:20px}
-    .about,
-    .director-grid,
-    .system-grid{grid-template-columns:1fr}
-    .program-grid{grid-template-columns:1fr 1fr}
-    .class-grid{grid-template-columns:1fr 1fr}
-    .process{grid-template-columns:1fr 1fr}
-    .gallery-grid{grid-template-columns:1fr 1fr}
-    .director-img{height:400px}
+.lotto-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 13px 5px;
+    background: #f7f7f7;
+    border-radius: 16px;
+    overflow: visible;
 }
 
-@media(max-width:600px){
-    .topbar{display:none}
-    .nav{height:65px}
-    .logo{width:170px;height:46px}
-    .nav-btn{padding:9px 12px;font-size:12px}
-    .hero{min-height:600px}
-    .hero h1{font-size:39px;letter-spacing:-2px}
-    .hero p{font-size:16px}
-    section{padding:70px 0}
-    .section-head h2,
-    .about-text h2,
-    .director-text h2,
-    .cta h2{font-size:31px}
-    .program-grid,
-    .class-grid,
-    .gallery-grid{grid-template-columns:1fr}
-    .class-card{height:330px}
-    .process{grid-template-columns:1fr}
-    .trust-grid{grid-template-columns:1fr 1fr}
-    .footer-grid{grid-template-columns:1fr}
-    .phone{font-size:29px}
+.set-number {
+    flex: 0 0 auto;
+    width: 42px;
+    font-weight: bold;
+    color: #555;
+    font-size: 16px;
+}
+
+.numbers {
+    min-width: 0;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: visible;
+}
+
+.ball {
+    flex: 0 0 auto;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 800;
+    color: white;
+    box-shadow: 0 5px 11px rgba(0,0,0,0.20);
+    animation: pop 0.35s ease;
+}
+
+.yellow {
+    background: #fbc400;
+}
+
+.blue {
+    background: #69a9e8;
+}
+
+.red {
+    background: #f25f5c;
+}
+
+.gray {
+    background: #aaa;
+}
+
+.green {
+    background: #5abb62;
+}
+
+.bonus-area {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 5px;
+    padding-left: 10px;
+    border-left: 2px dashed #ccc;
+}
+
+.bonus-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #e53935;
+}
+
+.bonus-ball {
+    border: 4px solid #e53935;
+    position: relative;
+}
+
+.bonus-ball::after {
+    content: "+";
+    position: absolute;
+    top: -9px;
+    right: -7px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    color: #e53935;
+    border: 2px solid #e53935;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+button {
+    margin-top: 28px;
+    width: min(500px, 94%);
+    border: none;
+    border-radius: 14px;
+    padding: 18px 20px;
+    background: #222;
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.18);
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    background: #000;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 스마트폰 */
+@media (max-width: 600px) {
+
+    body {
+        padding: 10px 1px;
+    }
+
+    .container {
+        padding: 25px 1px;
+        border-radius: 18px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .description {
+        font-size: 14px;
+        margin-bottom: 22px;
+    }
+
+    .lotto-list {
+        gap: 9px;
+    }
+
+    .lotto-row {
+        width: 100%;
+        padding: 11px 0;
+        gap: 1px;
+        flex-wrap: nowrap;
+        overflow: visible;
+    }
+
+    .set-number {
+        width: 28px;
+        font-size: 11px;
+        flex-shrink: 0;
+    }
+
+    .numbers {
+        width: calc(100% - 29px);
+        flex: 1 1 auto;
+        gap: 1px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        overflow: visible;
+    }
+
+    /*
+       이전보다 2단계 확대
+       스마트폰에서도 번호를 크게 표시
+    */
+    .ball {
+        width: clamp(43px, 11.8vw, 64px);
+        height: clamp(43px, 11.8vw, 64px);
+        font-size: clamp(17px, 4.7vw, 24px);
+        flex-shrink: 1;
+    }
+
+    .bonus-area {
+        flex-shrink: 1;
+        gap: 3px;
+        margin-left: 1px;
+        padding-left: 4px;
+        border-left-width: 2px;
+    }
+
+    .bonus-label {
+        font-size: clamp(7px, 2.4vw, 12px);
+    }
+
+    .bonus-ball {
+        border-width: 4px;
+    }
+
+    .bonus-ball::after {
+        width: 16px;
+        height: 16px;
+        top: -8px;
+        right: -5px;
+        font-size: 10px;
+    }
+
+    button {
+        width: 94%;
+        padding: 16px 10px;
+        font-size: 17px;
+    }
+}
+
+/* 아주 작은 스마트폰 */
+@media (max-width: 380px) {
+
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .lotto-row {
+        padding-left: 0;
+        padding-right: 0;
+        gap: 0;
+    }
+
+    .set-number {
+        width: 24px;
+        font-size: 10px;
+    }
+
+    .numbers {
+        width: calc(100% - 24px);
+        gap: 0;
+    }
+
+    /*
+       아주 작은 화면에서도 최대한 크게 유지
+    */
+    .ball {
+        width: clamp(40px, 10.8vw, 52px);
+        height: clamp(40px, 10.8vw, 52px);
+        font-size: clamp(15px, 4.2vw, 21px);
+    }
+
+    .bonus-area {
+        gap: 1px;
+        padding-left: 2px;
+    }
+
+    .bonus-label {
+        font-size: 6px;
+    }
+
+    .bonus-ball {
+        border-width: 3px;
+    }
+
+    .bonus-ball::after {
+        width: 14px;
+        height: 14px;
+        font-size: 8px;
+        top: -7px;
+        right: -5px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">
-    <div class="container">
-        <span>NSTUDY ACADEMY</span>
-        <span>취업교육 전문 아카데미</span>
+<div class="container">
+
+    <h1>🎯 로또 번호 추천</h1>
+
+    <p class="description">
+        행운의 번호 5세트를 랜덤으로 추천해드립니다.
+    </p>
+
+    <div class="lotto-list">
+
+        <div class="lotto-row">
+            <div class="set-number">1번</div>
+            <div class="numbers"></div>
+        </div>
+
+        <div class="lotto-row">
+            <div class="set-number">2번</div>
+            <div class="numbers"></div>
+        </div>
+
+        <div class="lotto-row">
+            <div class="set-number">3번</div>
+            <div class="numbers"></div>
+        </div>
+
+        <div class="lotto-row">
+            <div class="set-number">4번</div>
+            <div class="numbers"></div>
+        </div>
+
+        <div class="lotto-row">
+            <div class="set-number">5번</div>
+            <div class="numbers"></div>
+        </div>
+
     </div>
+
+    <button onclick="generateLotto()">
+        🎲 5세트 + 보너스 번호 추천
+    </button>
+
 </div>
 
-<header>
-    <div class="container nav">
-        <a href="#" class="logo" aria-label="NSTUDY"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABewAAAGVCAYAAACM3rHrAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFyWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgOS4xLWMwMDMgNzkuOTY5MGE4NywgMjAyNS8wMy8wNi0xOToxMjowMyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDI2LjkgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyNi0xMC0wMlQyMTowNzo1OSswOTowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNi0xMC0wMlQyMTowNzo1OSswOTowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjYtMTAtMDJUMjE6MDc6NTkrMDk6MDAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6YmEyN2Y2YjAtYzY0My0zNjRmLTkwZmQtMGQ1ODNmMjVhNzNiIiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6OTRkZjVhNzktNDFiOC1mMDRhLThkMTAtNDRjMzlhYWQ3MzAzIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6OTlmNzczMWYtODA2NS0zZjQ1LWJkOWQtOWE5MDMyMGZiMGI4IiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyI+IDx4bXBNTTpIaXN0b3J5></a>
-        <nav>
-            <a href="#about">소개</a>
-            <a href="#programs">프로그램</a>
-            <a href="#classroom">강의실</a>
-            <a href="#system">합격시스템</a>
-            <a href="#director">원장소개</a>
-        </nav>
-        <a href="tel:010-9337-5509" class="nav-btn">상담문의: 010-9337-5509</a>
-    </div>
-</header>
+<script>
 
-<main>
-    <section class="hero">
-        <div class="container hero-content">
-            <span class="hero-small">NCS 취업교육 전문 아카데미</span>
-            <h1>공기업 합격을 위한 <span>최적의 솔루션</span></h1>
-            <p>필기부터 면접까지 한 번에 준비하는 체계적인 커리큘럼을 만나보세요.</p>
-            <div class="hero-buttons">
-                <a href="tel:010-9337-5509" class="btn btn-primary">빠른 상담 신청</a>
-                <a href="#programs" class="btn btn-white">프로그램 보기</a>
-            </div>
-        </div>
-    </section>
+function generateOneSet() {
 
-    <div class="trust">
-        <div class="container trust-grid">
-            <div>
-                <strong>98%</strong>
-                <span>합격률 달성</span>
-            </div>
-            <div>
-                <strong>1,500+</strong>
-                <span>누적 수강생</span>
-            </div>
-            <div>
-                <strong>10년+</strong>
-                <span>전문 교육 경력</span>
-            </div>
-            <div>
-                <strong>1:1</strong>
-                <span>맞춤형 코칭</span>
-            </div>
-        </div>
-    </div>
+    let numbers = [];
 
-    <section id="about">
-        <div class="container about">
-            <div class="about-img">
-                <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="학원 소개">
-            </div>
-            <div class="about-text">
-                <span class="section-label">ABOUT NSTUDY</span>
-                <h2>체계적인 커리큘럼으로<br>합격의 꿈을 현실로 만듭니다</h2>
-                <p>NSTUDY는 오랜 공기업 취업 교육 노하우를 바탕으로 수강생 개개인에게 딱 맞는 맞춤형 학습 플랜을 제공합니다. 기초부터 실전까지 빈틈없이 준비하세요.</p>
-                <ul class="check">
-                    <li>NCS 직업기초능력 완벽 대비</li>
-                    <li>철저한 기업별 출제 경향 분석</li>
-                    <li>자기소개서부터 면접까지 원스톱 케어</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    for (let i = 1; i <= 45; i++) {
+        numbers.push(i);
+    }
 
-    <section id="programs" class="programs">
-        <div class="container">
-            <div class="section-head">
-                <span class="section-label">PROGRAMS</span>
-                <h2>NSTUDY 교육 프로그램</h2>
-                <p>목표하는 기업과 직무에 맞춘 전문적인 교육 과정을 제공합니다.</p>
-            </div>
-            <div class="program-grid">
-                <div class="card">
-                    <div class="card-img">
-                        <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="NCS 필기마스터">
-                    </div>
-                    <div class="card-body">
-                        <h3>NCS 필기마스터</h3>
-                        <p>의사소통, 수리, 문제해결능력 등 NCS 필기 시험의 핵심 유형을 완벽하게 마스터합니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-img">
-                        <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="서류 & 자소서">
-                    </div>
-                    <div class="card-body">
-                        <h3>서류 & 자소서</h3>
-                        <p>합격률을 높이는 구조화된 자기소개서 작성법과 NCS 기반 이력서 작성 코칭을 진행합니다.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-img">
-                        <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="실전 면접대비">
-                    </div>
-                    <div class="card-body">
-                        <h3>실전 면접대비</h3>
-                        <p>PT면접, 토론면접, 인성면접 등 실전과 동일한 환경에서 진행되는 1:1 모의 면접 코칭입니다.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    // Fisher-Yates 셔플
+    for (let i = numbers.length - 1; i > 0; i--) {
 
-    <section id="classroom">
-        <div class="container">
-            <div class="section-head">
-                <span class="section-label">CLASSROOM</span>
-                <h2>학원 시설 안내</h2>
-                <p>집중도 높은 학습 환경과 최신 편의시설을 갖춘 NSTUDY 강의실을 소개합니다.</p>
-            </div>
-            <div class="class-grid">
-                <div class="class-card">
-                    <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="강의실 1">
-                    <div class="class-overlay">
-                        <small>최적의 학습 환경</small>
-                        <h3>메인 대강의실</h3>
-                    </div>
-                </div>
-                <div class="class-card">
-                    <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="강의실 2">
-                    <div class="class-overlay">
-                        <small>그룹 스터디 전용</small>
-                        <h3>스터디룸</h3>
-                    </div>
-                </div>
-                <div class="class-card">
-                    <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="강의실 3">
-                    <div class="class-overlay">
-                        <small>자율 학습 공간</small>
-                        <h3>독서실형 자습실</h3>
-                    </div>
-                </div>
-                <div class="class-card">
-                    <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="강의실 4">
-                    <div class="class-overlay">
-                        <small>휴식과 소통</small>
-                        <h3>휴게라운지</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        const j = Math.floor(Math.random() * (i + 1));
 
-    <section class="gallery">
-        <div class="container">
-            <div class="section-head">
-                <span class="section-label">GALLERY</span>
-                <h2>교육 현장 스케치</h2>
-                <p>열정 넘치는 수강생들과 강사진의 생생한 강의 현장을 확인하세요.</p>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="갤러리 1">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="갤러리 2">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="갤러리 3">
-                </div>
-            </div>
-        </div>
-    </section>
+        [numbers[i], numbers[j]] =
+        [numbers[j], numbers[i]];
+    }
 
-    <section id="system">
-        <div class="container">
-            <div class="section-head">
-                <span class="section-label">SYSTEM</span>
-                <h2>NSTUDY만의 합격 시스템</h2>
-                <p>체계적이고 검증된 프로세스로 합격을 이끌어냅니다.</p>
-            </div>
-            <div class="system-grid">
-                <div class="system-box">
-                    <h3>1:1 맞춤형 진단 컨설팅</h3>
-                    <p>입교 전 심층 상담을 통해 현재 실력을 정확히 진단하고, 목표 기업에 맞춘 최적의 학습 로드맵을 설계해 드립니다.</p>
-                </div>
-                <div class="system-box">
-                    <h3>철저한 오답 관리 피드백</h3>
-                    <p>정기적인 모의고사와 일일 테스트를 통해 취약점을 분석하고, 꼼꼼한 오답 피드백으로 실력을 확실하게 끌어올립니다.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    // 앞의 6개 = 본 번호
+    const mainNumbers =
+        numbers.slice(0, 6).sort((a, b) => a - b);
 
-    <section id="director" class="director">
-        <div class="container director-grid">
-            <div class="director-img">
-                <img src="https://edu.chosun.com/site/data/img_dir/2023/12/06/2023120680167_0.jpg" alt="원장 사진">
-            </div>
-            <div class="director-text">
-                <span class="section-label" style="color: #62b0ff;">DIRECTOR MESSAGE</span>
-                <h2>수험생 여러분의 합격 파트너가<br>되어 드리겠습니다</h2>
-                <p>공기업 취업의 문은 넓고도 좁아 보이지만, 올바른 방향성과 철저한 준비가 있다면 반드시 열립니다. 오랜 기간 수많은 합격자를 배출해 온 노하우를 바탕으로 여러분의 든든한 동반자가 되어 끝까지 함께 달리겠습니다.</p>
-                <p><strong>NSTUDY 대표 원장</strong></p>
-            </div>
-        </div>
-    </section>
+    // 7번째 = 보너스 번호
+    const bonusNumber = numbers[6];
 
-    <section class="cta">
-        <div class="container">
-            <h2>지금 바로 공기업 합격의 주인공이 되세요</h2>
-            <p>궁금한 점이 있으시다면 언제든 편하게 문의해 주세요. 친절하게 안내해 드리겠습니다.</p>
-            <div class="phone">010-9337-5509</div>
-        </div>
-    </section>
-</main>
+    return {
+        main: mainNumbers,
+        bonus: bonusNumber
+    };
+}
 
-<footer>
-    <div class="container footer-grid">
-        <div>
-            <div class="footer-logo-wrap">
-                <span style="font-size: 20px; font-weight: bold; color: #fff;">NSTUDY</span>
-            </div>
-            <p>상호명: NSTUDY 아카데미 | 대표: 홍길동</p>
-            <p>주소: 서울특별시 강남구 테헤란로 123, 4층</p>
-            <p>전화번호: 010-9337-5509 | 이메일: contact@nstudy.co.kr</p>
-            <p style="margin-top: 15px; color: #6b7280;">Copyright © NSTUDY. All rights reserved.</p>
-        </div>
-        <div>
-            <h3>Quick Links</h3>
-            <p><a href="#about">학원소개</a></p>
-            <p><a href="#programs">교육과정</a></p>
-            <p><a href="#classroom">강의실 안내</a></p>
-            <p><a href="#system">합격시스템</a></p>
-        </div>
-        <div>
-            <h3>Customer Center</h3>
-            <p style="font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 10px;">010-9337-5509</p>
-            <p>평일: 09:00 ~ 21:00</p>
-            <p>주말/공휴일: 10:00 ~ 18:00</p>
-            <p>점심시간: 12:00 ~ 13:00</p>
-        </div>
-    </div>
-</footer>
+
+function getBallColor(number) {
+
+    if (number <= 10) {
+        return "yellow";
+    }
+
+    if (number <= 20) {
+        return "blue";
+    }
+
+    if (number <= 30) {
+        return "red";
+    }
+
+    if (number <= 40) {
+        return "gray";
+    }
+
+    return "green";
+}
+
+
+function generateLotto() {
+
+    const rows =
+        document.querySelectorAll(".lotto-row");
+
+    rows.forEach((row) => {
+
+        const numbersContainer =
+            row.querySelector(".numbers");
+
+        numbersContainer.innerHTML = "";
+
+        const result = generateOneSet();
+
+        // 본 번호 6개
+        result.main.forEach((number, index) => {
+
+            const ball =
+                document.createElement("div");
+
+            ball.className =
+                "ball " + getBallColor(number);
+
+            ball.textContent = number;
+
+            ball.style.animationDelay =
+                (index * 0.06) + "s";
+
+            numbersContainer.appendChild(ball);
+        });
+
+
+        // BONUS 영역
+        const bonusArea =
+            document.createElement("div");
+
+        bonusArea.className =
+            "bonus-area";
+
+
+        const bonusLabel =
+            document.createElement("span");
+
+        bonusLabel.className =
+            "bonus-label";
+
+        bonusLabel.textContent =
+            "BONUS";
+
+
+        const bonusBall =
+            document.createElement("div");
+
+        bonusBall.className =
+            "ball bonus-ball " +
+            getBallColor(result.bonus);
+
+        bonusBall.textContent =
+            result.bonus;
+
+        bonusBall.style.animationDelay =
+            "0.4s";
+
+
+        bonusArea.appendChild(bonusLabel);
+
+        bonusArea.appendChild(bonusBall);
+
+        numbersContainer.appendChild(bonusArea);
+
+    });
+}
+
+
+// 페이지를 처음 열었을 때 자동으로 번호 표시
+generateLotto();
+
+</script>
 
 </body>
 </html>
+```
