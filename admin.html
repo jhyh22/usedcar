@@ -16,12 +16,19 @@
 
 .dashboard-message:empty{display:none}.admin-grid{align-items:start}
 
+#request-workspace{margin-top:25px}#request-form{padding:20px 0;border-bottom:1px solid var(--line)}#request-form .button{width:auto}.request-card{border-top:1px solid var(--line);padding:22px 0}.request-card p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}.request-card .request-summary{font-weight:600;color:var(--ink)}.request-card textarea{width:100%;min-height:85px}.request-card .request-response{background:#edf0e4;padding:14px;border-radius:4px}.request-owner-form{display:grid;gap:10px;grid-template-columns:1fr 1fr}.request-owner-form label:last-of-type{grid-column:1/-1}.request-owner-form .button{justify-self:start}#request-feedback:not(:empty){padding:12px;background:#edf0e4}@media(max-width:600px){.request-owner-form{grid-template-columns:1fr}}
+
 </style><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNTIwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2U3ZTllMyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2M0Y2NjMCIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJjIiB4Mj0iMCIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiM2NTc4NjciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyNjNkMzAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJNMCAwaDkwMHY1MjBIMHoiLz48Y2lyY2xlIGN4PSI3MjAiIGN5PSIxMDAiIHI9IjE5MCIgZmlsbD0iI2YzZjNlOSIgb3BhY2l0eT0iLjYiLz48ZWxsaXBzZSBjeD0iNDUxIiBjeT0iMzkzIiByeD0iMzA1IiByeT0iMjciIGZpbGw9IiMyNTM4MmQiIG9wYWNpdHk9Ii4xMyIvPjxwYXRoIGQ9Im0xNjUgMzI3IDQ1LTg5IDEzNy0xNyA3NS02NmgxNjFsMTA1IDk3IDUzIDI3IDEyIDgwSDE1NXoiIGZpbGw9InVybCgjYykiLz48cGF0aCBkPSJtMzYzIDIyOSA2OS02MWg2NnY2OHptMTQ4LTYxaDYzbDc0IDc2LTEzNy03eiIgZmlsbD0iI2JlY2RjNiIvPjxwYXRoIGQ9Im0xODggMjgyIDYyLTktMTcgMjctNTcgNnptNDY5LTkgNjcgMjAgNCAxOC01Ny04eiIgZmlsbD0iI2Y5ZWZjOSIvPjxwYXRoIGQ9Ik0yNjcgMzI3aDM1MCIgc3Ryb2tlPSIjOTFhMjkxIiBzdHJva2Utd2lkdGg9IjMiLz48ZyBmaWxsPSIjMjAyYjI1IiBzdHJva2U9IiNkM2Q4Y2YiIHN0cm9rZS13aWR0aD0iOSI+PGNpcmNsZSBjeD0iMjkyIiBjeT0iMzU5IiByPSI0OSIvPjxjaXJjbGUgY3g9IjYzOCIgY3k9IjM1OSIgcj0iNDkiLz48L2c+PGcgZmlsbD0iIzhhOTk4ZCI+PGNpcmNsZSBjeD0iMjkyIiBjeT0iMzU5IiByPSIyMyIvPjxjaXJjbGUgY3g9IjYzOCIgY3k9IjM1OSIgcj0iMjMiLz48L2c+PHRleHQgeD0iNDUwIiB5PSI0NjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM1MDYxNTEiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE1IiBsZXR0ZXItc3BhY2luZz0iMyI+SUxMVVNUUkFUSU9OIMK3IFZFSElDTEUgUEhPVE8gQ09NSU5HIFNPT048L3RleHQ+PC9zdmc+Cg=="></head><body>
 <header><nav class="nav" aria-label="Admin navigation"><a href="index.html" class="brand">KOREA → MYANMAR<span>COLLECTION MANAGEMENT</span></a><div class="account-nav"><span id="session-status" role="status"></span><a class="button outline" href="index.html">View website</a><button id="account-open" class="button outline" type="button">Sign in</button><button id="account-join" class="button" type="button">Create account</button><button id="account-logout" class="button outline" type="button" hidden>Sign out</button></div></nav></header>
-<main class="admin-main"><div class="admin-heading"><div><div class="eyebrow">Your collection, connected</div><h1>Admin dashboard.</h1></div><p>Manage vehicles, upload photos and publish changes.</p></div>
+<main class="admin-main"><div class="admin-heading"><div><div class="eyebrow">Your collection, connected</div><h1 id="dashboard-title">Vehicle requests &amp; sourcing.</h1></div><p>Myanmar order managers request vehicles. The Korean owner sources and publishes them.</p></div>
 <div id="admin-gate" role="status">Sign in with an administrator account to continue. Access is checked by the server.</div>
 <div id="admin-content" hidden>
 <p id="admin-feedback" class="dashboard-message" role="status" aria-live="polite"></p>
+
+<section id="request-workspace" class="admin-card"><div class="admin-heading"><div><div class="eyebrow">Myanmar requests · Korea sourcing</div><h2 id="request-heading">Vehicle requests</h2></div><button id="refresh-requests" class="button outline" type="button">Refresh requests</button></div>
+<p id="request-feedback" role="status" aria-live="polite"></p>
+<form id="request-form" hidden><h3>Request a vehicle from Korea</h3><div class="fields"><label>Make / model<input name="model" required maxlength="100" placeholder="e.g. Chevrolet Malibu"></label><label>Quantity<input name="quantity" type="number" min="1" max="20" step="1" value="1" required></label><label>Model year from<input name="year_min" type="number" min="1980" max="2100" step="1"></label><label>Model year to<input name="year_max" type="number" min="1980" max="2100" step="1"></label><label>Preferred colour<input name="color" maxlength="60"></label><label>Engine / trim<input name="engine" maxlength="150"></label><label>Maximum vehicle budget per unit<input name="budget" type="number" min="0.01" max="999999999999.99" step="0.01" placeholder="Optional · excludes freight"></label><label>Budget currency<select name="currency"><option>USD</option><option>KRW</option></select></label></div><label>Requirements<textarea name="requirements" maxlength="3000" placeholder="Preferred condition, mileage, specifications or questions…"></textarea></label><p class="note">This is a sourcing request, not a confirmed purchase. Your request is shared with the Korean owner only. Freight from Incheon to Laem Chabang is quoted separately; onward arrangements are the buyer’s responsibility.</p><button id="submit-request" class="button" type="submit">Submit vehicle request</button></form>
+<p class="note">Showing the latest 200 requests you are permitted to view.</p><div id="request-list"></div></section>
 <div class="admin-grid"><section class="admin-card" style="padding-block:25px"><h2>Your vehicles</h2><div class="admin-actions"><button id="new-vehicle" type="button" class="button">+ Add vehicle</button><button id="refresh-vehicles" type="button" class="button outline">Refresh</button></div><div id="admin-vehicles"></div></section>
 <section class="admin-card" style="padding-block:25px"><h2 id="form-title">Add a vehicle</h2><form id="vehicle-form"><div class="fields">
 <label>Vehicle name<input name="name" required maxlength="100" placeholder="Chevrolet Malibu"></label><label>Model year<input name="year" required type="number" min="1980" max="2100" step="1"></label>
@@ -36,7 +43,7 @@
 <label class="checkbox-label"><input name="published" type="checkbox"> Publish on the public website</label><p class="note">Vehicle price excludes freight. Shipping is quoted only from Incheon to Laem Chabang; the buyer handles onward arrangements.</p>
 <div class="actions"><button type="button" id="preview-vehicle" class="button outline">Preview</button><button type="submit" id="save-vehicle" class="button">Save vehicle</button></div><div id="admin-preview" hidden></div>
 </form></section></div>
-<section id="member-management" class="admin-card" hidden><div class="eyebrow">Owner access only</div><h2>Member permissions</h2><p>Choose a confirmed member to grant or remove administrator access. Administrators can manage vehicles and images. Only the owner can change member roles.</p><p id="members-feedback" role="status" aria-live="polite"></p><div class="members-wrap"><table><thead><tr><th>Member</th><th>State / region</th><th>Role</th><th>Action</th></tr></thead><tbody id="member-rows"></tbody></table></div><div class="actions"><button id="members-prev" type="button" class="button outline">Previous</button><button id="members-next" type="button" class="button outline">Next</button></div></section>
+<section id="member-management" class="admin-card" hidden><div class="eyebrow">Owner access only</div><h2>Member permissions</h2><p>Choose a confirmed member to grant or remove administrator access. Order managers submit vehicle requests and view their own requests. Only the owner publishes vehicles, uploads images and changes member roles.</p><p id="members-feedback" role="status" aria-live="polite"></p><div class="members-wrap"><table><thead><tr><th>Member</th><th>State / region</th><th>Role</th><th>Action</th></tr></thead><tbody id="member-rows"></tbody></table></div><div class="actions"><button id="members-prev" type="button" class="button outline">Previous</button><button id="members-next" type="button" class="button outline">Next</button></div></section>
 </div>
 <dialog id="account-dialog" class="account-dialog" aria-labelledby="account-title">
 <div class="dialog-top"><h2 id="account-title">Welcome back.</h2><button id="account-close" type="button" aria-label="Close account">✕</button></div>
@@ -156,11 +163,11 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
  $('account-logout').onclick=async()=>{try{await app.signOut()}catch(error){$('session-status').textContent='Sign out failed. Please retry.'}};
  function update(){const state=app.state;$('account-open').textContent=state.session?'My account':'Sign in';$('account-logout').hidden=!state.session;$('account-join').hidden=Boolean(state.session);
   $('session-status').textContent=state.session?`Signed in${state.profile?' as '+state.profile.full_name:''}`:'';
-  document.querySelectorAll('[data-admin-link]').forEach(a=>a.hidden=!state.admin);
+  document.querySelectorAll('[data-admin-link]').forEach(a=>{a.hidden=!state.admin;a.textContent=state.owner?'Owner dashboard':'My vehicle requests'});
   form.hidden=Boolean(state.session);document.querySelector('.mode-tabs').hidden=Boolean(state.session);
   $('profile-form').hidden=!(state.session&&state.ready&&!state.profile&&!state.profileError);
   $('member-information').hidden=!state.session;
-  const p=state.profile;$('member-information').textContent=state.profileError?'Unable to load your vehicle-site profile. Please ask the site owner to check the database setup.':p?`${p.full_name} · ID: ${p.username} · ${p.region}${state.owner?' · Owner':state.admin?' · Administrator':''}`:'';
+  const p=state.profile;$('member-information').textContent=state.profileError?'Unable to load your vehicle-site profile. Please ask the site owner to check the database setup.':p?`${p.full_name} · ID: ${p.username} · ${p.region}${state.owner?' · Owner':state.admin?' · Order manager':''}`:'';
  }
  $('profile-form').onsubmit=async event=>{event.preventDefault();if(!$('profile-form').reportValidity())return;$('profile-submit').disabled=true;
   try{const {error}=await app.requireClient().rpc('usedcar_complete_profile',{member_id:$('profile-username').value.trim().toLowerCase(),member_name:$('profile-name').value.trim(),member_region:$('profile-region').value});if(error)throw error;await app.refresh();$('profile-feedback').textContent='Profile saved.'}catch(error){$('profile-feedback').textContent=error.message}finally{$('profile-submit').disabled=false}
@@ -180,7 +187,7 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
  function setBusy(value){busy=value;form.querySelectorAll('button').forEach(b=>b.disabled=value);$('new-vehicle').disabled=value;$('refresh-vehicles').disabled=value;$('photo-files').disabled=value}
  function reset(){selectedId=null;form.reset();form.elements.year.value=new Date().getFullYear();$('form-title').textContent='Add a vehicle';$('save-vehicle').textContent='Save vehicle';$('admin-preview').hidden=true;$('upload-feedback').textContent=''}
  function editor(v){reset();selectedId=v.id;for(const name of ['name','year','type','color','engine','description','notes','status','price_krw','mileage','source_url','checked_on'])form.elements[name].value=v[name]??'';form.elements.published.checked=v.published;form.elements.photos.value=[v.r2_key||v.image_url,...(v.photos||[]).map(p=>p.key||p.image)].filter(Boolean).join('\n');$('form-title').textContent='Edit vehicle';$('save-vehicle').textContent='Save changes';form.elements.name.focus()}
- async function loadVehicles(){const version=++requestVersion;const {data,error}=await app.requireClient().from('usedcar_vehicles').select('*').order('created_at',{ascending:false});if(version!==requestVersion||!app.state.admin)return;if(error)throw error;rows=data;$('admin-vehicles').replaceChildren();
+ async function loadVehicles(){const version=++requestVersion;const {data,error}=await app.requireClient().from('usedcar_vehicles').select('*').order('created_at',{ascending:false});if(version!==requestVersion||!app.state.owner)return;if(error)throw error;rows=data;$('admin-vehicles').replaceChildren();
   if(!rows.length){$('admin-vehicles').textContent='No vehicles yet. Add your first vehicle.';return}
   for(const v of rows){const row=document.createElement('div');row.className='vehicle-row';const label=document.createElement('span');label.textContent=`${v.year} ${v.name} · ${v.status} · ${v.published?'Published':'Draft'}`;row.append(label);
    const edit=document.createElement('button');edit.type='button';edit.className='button outline';edit.textContent='Edit';edit.onclick=()=>{if(!busy)editor(v)};row.append(edit);
@@ -206,7 +213,7 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
   if(existing+files.length>20){$('upload-feedback').textContent='A vehicle supports up to 20 photos. Remove extra photo lines first.';return}
   if(files.some(f=>!['image/jpeg','image/png','image/webp'].includes(f.type)||f.size>8*1024*1024||!f.size)){$('upload-feedback').textContent='Use JPEG, PNG or WebP images up to 8 MB each.';return}
   const startingUser=app.state.session?.user.id;setBusy(true);let uploaded=0;
-  try{for(const file of files){$('upload-feedback').textContent=`Uploading ${uploaded+1} of ${files.length}…`;const result=await app.uploadPhoto(file);if(startingUser!==app.state.session?.user.id||!app.state.admin)throw Error('Session changed. Sign in again.');form.elements.photos.value=[form.elements.photos.value.trim(),result.key].filter(Boolean).join('\n');uploaded++}$('upload-feedback').textContent=`${uploaded} photos uploaded. Save the vehicle to attach them to the listing.`}
+  try{for(const file of files){$('upload-feedback').textContent=`Uploading ${uploaded+1} of ${files.length}…`;const result=await app.uploadPhoto(file);if(startingUser!==app.state.session?.user.id||!app.state.owner)throw Error('Session changed. Sign in again.');form.elements.photos.value=[form.elements.photos.value.trim(),result.key].filter(Boolean).join('\n');uploaded++}$('upload-feedback').textContent=`${uploaded} photos uploaded. Save the vehicle to attach them to the listing.`}
   catch(error){$('upload-feedback').textContent=`${uploaded} photos uploaded. ${error.message} Uploaded photo paths are retained; reselect only remaining files.`}
   finally{$('photo-files').value='';setBusy(false)}
  };
@@ -216,20 +223,75 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
  };
  $('preview-vehicle').onclick=()=>{if(!form.reportValidity())return;try{const v=read(),box=$('admin-preview');box.replaceChildren();const image=document.createElement('img');image.src=v.image_url||publicURL(v.r2_key);image.alt=v.name;image.onerror=()=>{image.remove();say('Photo could not be loaded. Check its public R2 URL.')};const p=document.createElement('p');p.textContent=`${v.year} ${v.name} · ${v.color} · ${v.price_krw?'₩'+v.price_krw.toLocaleString('en-US'):'Price unverified'} · ${v.description}`;box.append(image,p);box.hidden=false}catch(error){say(error.message)}};
  async function loadMembers(){if(!app.state.owner)return;const {data,error}=await app.requireClient().rpc('usedcar_list_members',{page_number:pageNumber});if(!app.state.owner)return;if(error)throw error;$('member-rows').replaceChildren();
-  for(const member of data){const row=document.createElement('tr');row.innerHTML=`<td>${escapeHTML(member.full_name)}<br>${escapeHTML(member.email)}${member.confirmed?'':'<br>Email not confirmed'}</td><td>${escapeHTML(member.region)}</td><td>${escapeHTML(member.role)}</td><td></td>`;
-   if(member.role!=='owner'&&member.confirmed){const button=document.createElement('button');button.type='button';button.className='button outline';button.textContent=member.role==='admin'?'Remove admin':'Make admin';button.onclick=async()=>{if(!confirm(`${button.textContent}: ${member.full_name}?`))return;button.disabled=true;try{const {error}=await app.requireClient().rpc('usedcar_set_member_admin',{target_user:member.id,make_admin:member.role!=='admin'});if(error)throw error;await loadMembers();$('members-feedback').textContent='Member permissions updated.'}catch(error){$('members-feedback').textContent=error.message}finally{button.disabled=false}};row.lastElementChild.append(button)}$('member-rows').append(row)
+  for(const member of data){const row=document.createElement('tr');row.innerHTML=`<td>${escapeHTML(member.full_name)}<br>${escapeHTML(member.email)}${member.confirmed?'':'<br>Email not confirmed'}</td><td>${escapeHTML(member.region)}</td><td>${escapeHTML(member.role==='owner'?'Korean owner':member.role==='admin'?'Myanmar order manager':'Member')}</td><td></td>`;
+   if(member.role!=='owner'&&member.confirmed){const button=document.createElement('button');button.type='button';button.className='button outline';button.textContent=member.role==='admin'?'Remove order manager':'Make order manager';button.onclick=async()=>{if(!confirm(`${button.textContent}: ${member.full_name}?`))return;button.disabled=true;try{const {error}=await app.requireClient().rpc('usedcar_set_member_admin',{target_user:member.id,make_admin:member.role!=='admin'});if(error)throw error;await loadMembers();$('members-feedback').textContent='Member permissions updated.'}catch(error){$('members-feedback').textContent=error.message}finally{button.disabled=false}};row.lastElementChild.append(button)}$('member-rows').append(row)
   }
   $('members-prev').disabled=pageNumber===0;$('members-next').disabled=data.length<50;
  }
  $('members-prev').onclick=()=>{if(pageNumber>0){pageNumber--;loadMembers().catch(e=>$('members-feedback').textContent=e.message)}};$('members-next').onclick=()=>{pageNumber++;loadMembers().catch(e=>$('members-feedback').textContent=e.message)};
- function authUpdate(){const state=app.state;$('admin-content').hidden=!state.admin;$('admin-gate').hidden=state.admin;$('member-management').hidden=!state.owner;
+ function authUpdate(){const state=app.state;$('admin-content').hidden=!state.admin;$('admin-gate').hidden=state.admin;$('member-management').hidden=!state.owner;document.querySelector('.admin-grid').hidden=!state.owner;
+  $('dashboard-title').textContent=state.owner?'Korea sourcing desk.':'My vehicle requests.';
   if(!app.client)$('admin-gate').textContent='Supabase is not connected. Complete site-config.js and the database setup before using administration.';
   else if(!state.session)$('admin-gate').textContent='Sign in with an administrator account to continue.';
   else if(!state.admin)$('admin-gate').textContent='Checking permissions, or this account has no administrator role. Only the owner can grant administrator access.';
-  if(!state.admin){identity='';requestVersion++;rows=[];$('admin-vehicles').replaceChildren();$('member-rows').replaceChildren();reset();return}
-  const key=state.session.user.id+':'+state.owner;if(identity!==key){identity=key;pageNumber=0;loadVehicles().catch(e=>say(e.message));if(state.owner)loadMembers().catch(e=>$('members-feedback').textContent=e.message)}
+  if(!state.owner){identity='';requestVersion++;rows=[];$('admin-vehicles').replaceChildren();$('member-rows').replaceChildren();reset();return}
+  const key=state.session.user.id+':'+state.owner;if(identity!==key){identity=key;pageNumber=0;if(state.owner){loadVehicles().catch(e=>say(e.message));loadMembers().catch(e=>$('members-feedback').textContent=e.message)}}
  }
+ window.addEventListener('prepare-request-listing',event=>{if(!app.state.owner)return;const r=event.detail;reset();form.elements.name.value=r.model;form.elements.year.value=r.year_min||r.year_max||new Date().getFullYear();form.elements.color.value=r.color;form.elements.engine.value=r.engine;form.elements.description.value='Sourced in South Korea. Confirm the exact specification, condition and availability.';say('Complete the actual vehicle details and photos, publish the listing, then link it in the request response.');form.scrollIntoView({behavior:'smooth'})});
  window.addEventListener('cloud-auth-change',authUpdate);reset();authUpdate();
+})();
+
+</script><script>
+'use strict';
+(() => {
+ const $=id=>document.getElementById(id),app=window.CloudApp,form=$('request-form');let version=0,lastIdentity='',submitting=false;
+ const say=message=>{$('request-feedback').textContent=message};
+ const text=(tag,value,className='')=>{const el=document.createElement(tag);el.textContent=value;el.className=className;return el};
+ async function load(){
+  if(!app.state.admin)return;const revision=++version;
+  const {data,error}=await app.requireClient().rpc('usedcar_list_requests');
+  if(revision!==version||!app.state.admin)return;if(error)throw error;
+  let vehicles=[];if(app.state.owner){const result=await app.requireClient().from('usedcar_vehicles').select('id,name,year').eq('published',true);if(result.error)throw result.error;vehicles=result.data}
+  if(revision!==version||!app.state.admin)return;
+  $('request-list').replaceChildren();if(!data.length)$('request-list').append(text('p','No vehicle requests yet.'));
+  for(const r of data){
+   const card=document.createElement('article');card.className='request-card';card.append(text('h3',r.model));
+   card.append(text('p',`${r.status} · ${r.quantity} vehicle(s) · Years: ${r.year_min||'Any'}–${r.year_max||'Any'}`,'request-summary'));
+   card.append(text('p',`Reference: ${r.id}\n${r.color||'Any colour'} · ${r.engine||'Engine / trim flexible'}\nBudget per vehicle: ${r.budget?`${r.currency} ${Number(r.budget).toLocaleString('en-US')}`:'To discuss'} (freight excluded)`));
+   if(app.state.owner)card.append(text('p',`Requested by ${r.requester_name} · ${r.requester_region}`));
+   if(r.requirements)card.append(text('p',r.requirements));
+   if(r.owner_response)card.append(text('p','Korean owner’s response:\n'+r.owner_response,'request-response'));
+   if(r.vehicle_id){const link=document.createElement('a');link.className='button outline';link.href='index.html?vehicle='+encodeURIComponent(r.vehicle_id)+'#collection';link.textContent='View sourced vehicle →';card.append(link)}
+   if(app.state.owner){
+    const prepare=document.createElement('button');prepare.type='button';prepare.className='button outline';prepare.textContent='Prepare a sourced listing';prepare.onclick=()=>window.dispatchEvent(new CustomEvent('prepare-request-listing',{detail:r}));card.append(prepare);
+    const responseForm=document.createElement('form');responseForm.className='request-owner-form';
+    const statusLabel=text('label','Progress status'),status=document.createElement('select');for(const value of ['Requested','Searching','Proposed','Closed','Cancelled']){const o=new Option(value,value);status.append(o)}status.value=r.status;statusLabel.append(status);
+    const vehicleLabel=text('label','Matched published vehicle'),vehicle=document.createElement('select');vehicle.append(new Option('Not selected',''));for(const v of vehicles)vehicle.append(new Option(`${v.year} ${v.name}`,v.id));vehicle.value=r.vehicle_id||'';vehicleLabel.append(vehicle);
+    const replyLabel=text('label','Response to requester'),reply=document.createElement('textarea');reply.maxLength=3000;reply.value=r.owner_response||'';replyLabel.append(reply);
+    const save=document.createElement('button');save.className='button';save.type='submit';save.textContent='Save progress & response';responseForm.append(statusLabel,vehicleLabel,replyLabel,save);
+    responseForm.onsubmit=async event=>{event.preventDefault();save.disabled=true;try{const {error}=await app.requireClient().rpc('usedcar_respond_request',{request_id:r.id,new_status:status.value,response_text:reply.value.trim(),matched_vehicle:vehicle.value||null});if(error)throw error;await load();say('Request progress and response saved.')}catch(error){say(error.message)}finally{save.disabled=false}};
+    card.append(responseForm);
+   }else if(r.status==='Requested'){
+    const cancel=document.createElement('button');cancel.type='button';cancel.className='button outline';cancel.textContent='Cancel this request';cancel.onclick=async()=>{if(!confirm('Cancel your unprocessed request?'))return;cancel.disabled=true;try{const {error}=await app.requireClient().rpc('usedcar_cancel_request',{request_id:r.id});if(error)throw error;await load();say('Request cancelled.')}catch(error){say(error.message)}finally{cancel.disabled=false}};card.append(cancel);
+   }
+   $('request-list').append(card);
+  }
+ }
+ form.onsubmit=async event=>{
+  event.preventDefault();if(submitting||!form.reportValidity())return;
+  const data=new FormData(form),payload={};for(const key of ['model','color','engine','requirements'])payload[key]=String(data.get(key)||'').trim();if(!payload.model){say('Enter the requested make and model.');return}
+  for(const key of ['year_min','year_max','budget'])payload[key]=String(data.get(key)).trim()===''?null:Number(data.get(key));
+  if(payload.year_min&&payload.year_max&&payload.year_min>payload.year_max){say('The earliest model year must not exceed the latest year.');return}
+  payload.quantity=Number(data.get('quantity'));payload.currency=String(data.get('currency'));
+  submitting=true;$('submit-request').disabled=true;
+  try{const {error}=await app.requireClient().from('usedcar_requests').insert(payload);if(error)throw error;form.reset();await load();say('Vehicle request submitted. The Korean owner will review your requirements.')}catch(error){say(error.message)}finally{submitting=false;$('submit-request').disabled=false}
+ };
+ $('refresh-requests').onclick=()=>load().catch(error=>say(error.message));
+ function update(){const state=app.state;$('request-workspace').hidden=!state.admin;form.hidden=!state.admin||state.owner;$('request-heading').textContent=state.owner?'Buyer vehicle requests':'My vehicle requests';
+  const identity=state.admin?state.session.user.id+':'+state.owner:'';
+  if(identity!==lastIdentity){lastIdentity=identity;version++;$('request-list').replaceChildren();form.reset();say('');if(state.admin)load().catch(error=>say('Requests are not available yet. '+error.message))}
+ }
+ window.addEventListener('cloud-auth-change',update);update();
 })();
 
 </script></body></html>

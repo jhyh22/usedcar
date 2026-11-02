@@ -223,6 +223,7 @@ async function loadPublicCollection(){
   vehicles=await CloudApp.publicVehicles();
   const select=document.getElementById('vehicle-select');while(select.options.length>1)select.remove(1);
   for(const v of vehicles){const option=document.createElement('option');option.value=v.id;option.textContent=`${v.year} ${v.name} · ${v.color}`;select.append(option)}
+  const matched=new URLSearchParams(location.search).get('vehicle');const selection=vehicles.find(v=>v.id===matched);if(selection)document.getElementById('search').value=selection.name;
   render();if(note)note.textContent='';
  }catch{if(note)note.textContent='Live collection is temporarily unavailable. Showing the initial selection; availability must be confirmed.'}
 }
@@ -272,11 +273,11 @@ loadPublicCollection();
  $('account-logout').onclick=async()=>{try{await app.signOut()}catch(error){$('session-status').textContent='Sign out failed. Please retry.'}};
  function update(){const state=app.state;$('account-open').textContent=state.session?'My account':'Sign in';$('account-logout').hidden=!state.session;$('account-join').hidden=Boolean(state.session);
   $('session-status').textContent=state.session?`Signed in${state.profile?' as '+state.profile.full_name:''}`:'';
-  document.querySelectorAll('[data-admin-link]').forEach(a=>a.hidden=!state.admin);
+  document.querySelectorAll('[data-admin-link]').forEach(a=>{a.hidden=!state.admin;a.textContent=state.owner?'Owner dashboard':'My vehicle requests'});
   form.hidden=Boolean(state.session);document.querySelector('.mode-tabs').hidden=Boolean(state.session);
   $('profile-form').hidden=!(state.session&&state.ready&&!state.profile&&!state.profileError);
   $('member-information').hidden=!state.session;
-  const p=state.profile;$('member-information').textContent=state.profileError?'Unable to load your vehicle-site profile. Please ask the site owner to check the database setup.':p?`${p.full_name} · ID: ${p.username} · ${p.region}${state.owner?' · Owner':state.admin?' · Administrator':''}`:'';
+  const p=state.profile;$('member-information').textContent=state.profileError?'Unable to load your vehicle-site profile. Please ask the site owner to check the database setup.':p?`${p.full_name} · ID: ${p.username} · ${p.region}${state.owner?' · Owner':state.admin?' · Order manager':''}`:'';
  }
  $('profile-form').onsubmit=async event=>{event.preventDefault();if(!$('profile-form').reportValidity())return;$('profile-submit').disabled=true;
   try{const {error}=await app.requireClient().rpc('usedcar_complete_profile',{member_id:$('profile-username').value.trim().toLowerCase(),member_name:$('profile-name').value.trim(),member_region:$('profile-region').value});if(error)throw error;await app.refresh();$('profile-feedback').textContent='Profile saved.'}catch(error){$('profile-feedback').textContent=error.message}finally{$('profile-submit').disabled=false}
