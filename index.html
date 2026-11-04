@@ -173,7 +173,7 @@ function render(){
 }
 function showDetails(v,button){
  lastDetailButton=button;
- const facts=[['Model year',v.year],['Body style',v.type],['Colour',v.color],['Engine / trim',v.engine],['Mileage',mileage(v)],['Status',v.status],['Vehicle price',price(v)],['Price checked',v.checkedOn||'Not yet verified']];
+ const facts=[['Model year',v.year||'Not specified'],['Body style',v.type],['Colour',v.color],['Engine / trim',v.engine],['Mileage',mileage(v)],['Status',v.status],['Vehicle price',price(v)],['Price checked',v.checkedOn||'Not yet verified']];
  $('detail-content').innerHTML=`<img class="detail-image" src="${escapeHTML(imageURL(v.image,v.r2Key))}" alt="${escapeHTML(v.imageAlt||v.name)}"><p id="detail-image-note" class="note">${v.illustration&&!usesR2(v)?'Generic illustration, not a photograph of the requested model.':'Vehicle photo; confirm current condition before purchase.'}</p><h2 id="detail-title">${escapeHTML(v.name)}</h2><p>${escapeHTML(v.description)}</p><dl class="detail-grid">${facts.map(([k,val])=>`<div><dt>${escapeHTML(k)}</dt><dd>${escapeHTML(val)}</dd></div>`).join('')}</dl><p>${escapeHTML(v.notes)}</p><p class="note">Vehicle price excludes transport. One container is planned from Incheon to Laem Chabang, subject to loading confirmation. Onward arrangements are the buyer’s responsibility.</p>`;
  fallbackImage($('detail-content').querySelector('img'),v.image);
  const photos=[{key:v.r2Key,image:v.image,alt:v.imageAlt||v.name},...(v.photos||[])];
@@ -194,13 +194,13 @@ function showDetails(v,button){
 }
 $('close-dialog').onclick=()=>$('vehicle-dialog').close();
 $('vehicle-dialog').addEventListener('close',()=>lastDetailButton?.focus({preventScroll:true}));
-for(const v of vehicles){const option=document.createElement('option');option.value=v.id;option.textContent=`${v.year} ${v.name} · ${v.color}`;$('vehicle-select').append(option)}
+for(const v of vehicles){const option=document.createElement('option');option.value=v.id;option.textContent=`${v.year||''} ${v.name} · ${v.color}`;$('vehicle-select').append(option)}
 $('search').addEventListener('input',render);$('sort').addEventListener('change',render);
 document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render()}));
 $('reset').onclick=()=>{$('search').value='';$('sort').value='featured';document.querySelector('[data-filter="All"]').click()};
 $('inquiry-form').addEventListener('submit',e=>{
  e.preventDefault();const data=new FormData(e.target),v=vehicles.find(v=>v.id===data.get('vehicle'));
- inquiry=`Hello, I am ${String(data.get('name')).trim()}.\nVehicle: ${v?`${v.year} ${v.name} (${v.color}), reference ${v.id}`:'General inquiry'}\n\n${String(data.get('message')).trim()}\n\nPlease quote the vehicle price separately from freight (Incheon → Laem Chabang). Onward transport is handled by the buyer.`;
+ inquiry=`Hello, I am ${String(data.get('name')).trim()}.\nVehicle: ${v?`${v.year||''} ${v.name} (${v.color}), reference ${v.id}`:'General inquiry'}\n\n${String(data.get('message')).trim()}\n\nPlease quote the vehicle price separately from freight (Incheon → Laem Chabang). Onward transport is handled by the buyer.`;
  $('result').textContent=inquiry;$('copy').hidden=false;$('copy').textContent='Copy inquiry';$('send-options').replaceChildren();
  const contact=window.SELLER_CONTACT||{};
  if(/^\d{7,15}$/.test(contact.whatsapp||''))addContact(`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(inquiry)}`,'Open WhatsApp →');
@@ -222,7 +222,7 @@ async function loadPublicCollection(){
  try{
   vehicles=await CloudApp.publicVehicles();
   const select=document.getElementById('vehicle-select');while(select.options.length>1)select.remove(1);
-  for(const v of vehicles){const option=document.createElement('option');option.value=v.id;option.textContent=`${v.year} ${v.name} · ${v.color}`;select.append(option)}
+  for(const v of vehicles){const option=document.createElement('option');option.value=v.id;option.textContent=`${v.year||''} ${v.name} · ${v.color}`;select.append(option)}
   const matched=new URLSearchParams(location.search).get('vehicle');const selection=vehicles.find(v=>v.id===matched);if(selection)document.getElementById('search').value=selection.name;
   render();if(note)note.textContent='';
  }catch{if(note)note.textContent='Live collection is temporarily unavailable. Showing the initial selection; availability must be confirmed.'}
