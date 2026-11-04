@@ -37,9 +37,7 @@
 <label>Status<select name="status"><option>Sourcing</option><option>Available</option><option>Reserved</option><option>Sold</option></select></label>
 <label>Vehicle price in KRW<input name="price_krw" type="number" min="1" max="1000000000000" step="1" placeholder="Leave blank if unverified"></label><label>Mileage in km<input name="mileage" type="number" min="0" max="2147483647" step="1" placeholder="Leave blank if unverified"></label>
 </div><label>Description<textarea name="description" required maxlength="2000"></textarea></label><label>Condition / additional notes<textarea name="notes" maxlength="3000"></textarea></label>
-<label>Upload vehicle photos to R2<input id="photo-files" type="file" accept="image/jpeg,image/png,image/webp" multiple></label><p class="note">JPEG, PNG or WebP, up to 8 MB each, up to 20 photos per vehicle. Upload first, then save the vehicle. Uploaded photos are publicly accessible.</p><button id="upload-photos" type="button" class="button outline">Upload selected photos</button><p id="upload-feedback" role="status" aria-live="polite"></p>
-<label>Photo URLs or R2 object paths — one per line<textarea name="photos" required placeholder="Upload photos above, or paste existing public HTTPS URLs / R2 paths"></textarea></label><p class="note">First photo is the cover. Remove or reorder lines to change the gallery. Deleting a listing does not delete its R2 files.</p>
-<div class="fields"><label>Original seller listing (optional)<input name="source_url" type="url" placeholder="https://…"></label><label>Price checked on (optional)<input name="checked_on" type="date"></label></div>
+<label>Vehicle photos — select screenshots or photos<input id="photo-files" type="file" accept="image/jpeg,image/png,image/webp" multiple></label><p class="note">Select multiple images from your computer at once. Photos upload automatically when you save. JPEG, PNG or WebP, up to 8 MB each, up to 20 photos. The first photo is the cover.</p><div id="photo-gallery" style="display:flex;flex-wrap:wrap;gap:12px;margin:15px 0"></div><p id="upload-feedback" role="status" aria-live="polite"></p>
 <label class="checkbox-label"><input name="published" type="checkbox"> Publish on the public website</label><p class="note">Vehicle price excludes freight. Shipping is quoted only from Incheon to Laem Chabang; the buyer handles onward arrangements.</p>
 <div class="actions"><button type="button" id="preview-vehicle" class="button outline">Preview</button><button type="submit" id="save-vehicle" class="button">Save vehicle</button></div><div id="admin-preview" hidden></div>
 </form></section></div>
@@ -179,14 +177,14 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
 'use strict';
 (() => {
  const $=id=>document.getElementById(id),app=window.CloudApp,form=$('vehicle-form');
- let selectedId=null,rows=[],pageNumber=0,busy=false,identity='',requestVersion=0;
+ let selectedId=null,rows=[],pageNumber=0,busy=false,identity='',requestVersion=0,photos=[];
  const say=text=>{$('admin-feedback').textContent=text};
  const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const https=value=>{try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password?u.href:''}catch{return ''}};
  const publicURL=key=>(window.SITE_CONFIG.r2PublicUrl||'').replace(/\/$/,'')+'/'+key.split('/').map(encodeURIComponent).join('/');
  function setBusy(value){busy=value;form.querySelectorAll('button').forEach(b=>b.disabled=value);$('new-vehicle').disabled=value;$('refresh-vehicles').disabled=value;$('photo-files').disabled=value}
- function reset(){selectedId=null;form.reset();form.elements.year.value=new Date().getFullYear();$('form-title').textContent='Add a vehicle';$('save-vehicle').textContent='Save vehicle';$('admin-preview').hidden=true;$('upload-feedback').textContent=''}
- function editor(v){reset();selectedId=v.id;for(const name of ['name','year','type','color','engine','description','notes','status','price_krw','mileage','source_url','checked_on'])form.elements[name].value=v[name]??'';form.elements.published.checked=v.published;form.elements.photos.value=[v.r2_key||v.image_url,...(v.photos||[]).map(p=>p.key||p.image)].filter(Boolean).join('\n');$('form-title').textContent='Edit vehicle';$('save-vehicle').textContent='Save changes';form.elements.name.focus()}
+ function reset(){selectedId=null;form.reset();form.elements.year.value=new Date().getFullYear();$('form-title').textContent='Add a vehicle';$('save-vehicle').textContent='Save vehicle';$('admin-preview').hidden=true;$('upload-feedback').textContent='';clearPhotos()}
+ function editor(v){reset();selectedId=v.id;for(const name of ['name','year','type','color','engine','description','notes','status','price_krw','mileage'])form.elements[name].value=v[name]??'';form.elements.published.checked=v.published;photos=[...(v.r2_key||v.image_url?[{key:v.r2_key||'',image:v.image_url||''}]:[]),...(v.photos||[])];renderPhotos();$('form-title').textContent='Edit vehicle';$('save-vehicle').textContent='Save changes';form.elements.name.focus()}
  async function loadVehicles(){const version=++requestVersion;const {data,error}=await app.requireClient().from('usedcar_vehicles').select('*').order('created_at',{ascending:false});if(version!==requestVersion||!app.state.owner)return;if(error)throw error;rows=data;$('admin-vehicles').replaceChildren();
   if(!rows.length){$('admin-vehicles').textContent='No vehicles yet. Add your first vehicle.';return}
   for(const v of rows){const row=document.createElement('div');row.className='vehicle-row';const label=document.createElement('span');label.textContent=`${v.year} ${v.name} · ${v.status} · ${v.published?'Published':'Draft'}`;row.append(label);
@@ -195,33 +193,38 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
   }
  }
  function read(){
-  const data=new FormData(form),urls=String(data.get('photos')).split(/\r?\n/).map(s=>s.trim()).filter(Boolean);if(!urls.length||urls.length>20)throw Error('Add between 1 and 20 photos.');
-  const photos=urls.map(value=>{if(https(value))return {image:https(value),key:''};if(/^[a-z]+:/i.test(value)||value.startsWith('/')||!value.split('/').every(s=>s&&s!=='.'&&s!=='..'))throw Error('Use public HTTPS photo URLs or relative R2 object paths.');return {key:value}});
+  const data=new FormData(form);if(!photos.length||photos.length>20)throw Error('Select between 1 and 20 photos.');
   const result={};for(const key of ['name','color','engine','description','notes'])result[key]=String(data.get(key)||'').trim();
   if(!result.name||!result.color||!result.description)throw Error('Complete the required vehicle fields.');
   result.year=Number(data.get('year'));if(!Number.isInteger(result.year)||result.year<1980||result.year>2100)throw Error('Enter a valid model year.');
   result.type=String(data.get('type'));result.status=String(data.get('status'));result.published=data.get('published')==='on';
   for(const key of ['price_krw','mileage']){const raw=String(data.get(key)).trim();result[key]=raw===''?null:Number(raw);if(result[key]!==null&&(!Number.isSafeInteger(result[key])||result[key]<0||(key==='price_krw'&&result[key]===0)))throw Error('Enter a whole positive price and nonnegative mileage, or leave blank.')}
-  result.r2_key=photos[0].key||'';result.image_url=photos[0].image||'';result.photos=photos.slice(1).map((p,i)=>({...p,alt:`${result.name}, photo ${i+2}`}));
-  const source=String(data.get('source_url')||'').trim();if(source&&!https(source))throw Error('Seller links must use HTTPS.');result.source_url=source;result.checked_on=data.get('checked_on')||null;
+  result.r2_key=photos[0].key||'';result.image_url=photos[0].image||'';result.photos=photos.slice(1).map((p,i)=>({key:p.key||'',image:p.image||'',alt:`${result.name}, photo ${i+2}`}));
   return result;
  }
  $('new-vehicle').onclick=reset;$('refresh-vehicles').onclick=()=>loadVehicles().catch(e=>say(e.message));
- $('upload-photos').onclick=async()=>{
-  if(busy)return;const files=[...$('photo-files').files];const existing=form.elements.photos.value.split(/\r?\n/).filter(s=>s.trim()).length;
-  if(!files.length){$('upload-feedback').textContent='Select photos first.';return}
-  if(existing+files.length>20){$('upload-feedback').textContent='A vehicle supports up to 20 photos. Remove extra photo lines first.';return}
-  if(files.some(f=>!['image/jpeg','image/png','image/webp'].includes(f.type)||f.size>8*1024*1024||!f.size)){$('upload-feedback').textContent='Use JPEG, PNG or WebP images up to 8 MB each.';return}
-  const startingUser=app.state.session?.user.id;setBusy(true);let uploaded=0;
-  try{for(const file of files){$('upload-feedback').textContent=`Uploading ${uploaded+1} of ${files.length}…`;const result=await app.uploadPhoto(file);if(startingUser!==app.state.session?.user.id||!app.state.owner)throw Error('Session changed. Sign in again.');form.elements.photos.value=[form.elements.photos.value.trim(),result.key].filter(Boolean).join('\n');uploaded++}$('upload-feedback').textContent=`${uploaded} photos uploaded. Save the vehicle to attach them to the listing.`}
-  catch(error){$('upload-feedback').textContent=`${uploaded} photos uploaded. ${error.message} Uploaded photo paths are retained; reselect only remaining files.`}
-  finally{$('photo-files').value='';setBusy(false)}
+ function clearPhotos(){for(const p of photos)if(p.preview)URL.revokeObjectURL(p.preview);photos=[];renderPhotos()}
+ function renderPhotos(){const gallery=$('photo-gallery');gallery.replaceChildren();photos.forEach((p,index)=>{const card=document.createElement('div');card.style.width='140px';const image=document.createElement('img');image.src=p.preview||p.image||publicURL(p.key);image.alt=`Vehicle photo ${index+1}`;image.style.cssText='width:140px;height:100px;object-fit:contain';const label=document.createElement('p');label.textContent=index===0?'Cover photo':`Photo ${index+1}`;const remove=document.createElement('button');remove.type='button';remove.className='button outline';remove.textContent='Remove';remove.disabled=busy;remove.onclick=()=>{if(busy)return;if(p.preview)URL.revokeObjectURL(p.preview);photos.splice(index,1);renderPhotos()};card.append(image,label,remove);gallery.append(card)})}
+ $('photo-files').onchange=()=>{
+  const files=[...$('photo-files').files];$('photo-files').value='';if(busy)return;
+  if(photos.length+files.length>20){$('upload-feedback').textContent='Choose up to 20 photos in total.';return}
+  if(files.some(f=>!['image/jpeg','image/png','image/webp'].includes(f.type)||!f.size||f.size>8*1024*1024)){$('upload-feedback').textContent='Choose JPEG, PNG or WebP images up to 8 MB each.';return}
+  for(const file of files)photos.push({file,preview:URL.createObjectURL(file)});renderPhotos();$('upload-feedback').textContent=`${photos.length} photos selected. Click Save vehicle to upload and save.`;
  };
- form.onsubmit=async event=>{event.preventDefault();if(busy||!form.reportValidity())return;if($('photo-files').files.length){say('Upload your selected photos first, or clear the file selection.');return}
-  try{const payload=read();setBusy(true);const query=selectedId?app.requireClient().from('usedcar_vehicles').update(payload).eq('id',selectedId):app.requireClient().from('usedcar_vehicles').insert(payload);const {error}=await query;if(error)throw error;reset();await loadVehicles();say(payload.published?'Vehicle saved and published. Refresh the public collection to see it.':'Vehicle saved as a private draft.')}
-  catch(error){say(error.message)}finally{setBusy(false)}
+ form.onsubmit=async event=>{event.preventDefault();if(busy||!form.reportValidity())return;
+  const startingUser=app.state.session?.user.id;
+  const checkOwner=()=>{if(startingUser!==app.state.session?.user.id||!app.state.owner)throw Error('Session changed. Sign in again.')};
+  try{read();setBusy(true);renderPhotos();checkOwner();
+   const pending=photos.filter(p=>p.file);let done=0;
+   for(const photo of pending){$('upload-feedback').textContent=`Uploading photo ${done+1} of ${pending.length}…`;const result=await app.uploadPhoto(photo.file);checkOwner();
+    if(!result.key)throw Error('The upload service did not return a photo reference. Please retry.');photo.key=result.key;delete photo.file;done++;
+   }
+   checkOwner();const payload=read();const query=selectedId?app.requireClient().from('usedcar_vehicles').update(payload).eq('id',selectedId):app.requireClient().from('usedcar_vehicles').insert(payload);const {error}=await query;if(error)throw error;
+   reset();say(payload.published?'Vehicle saved and published. Refresh the public collection to see it.':'Vehicle saved as a private draft.');await loadVehicles();
+  }catch(error){const message=`Could not save: ${error.message}. Your selected photos are kept. Try Save vehicle again; completed uploads will not be repeated.`;say(message);$('upload-feedback').textContent=message}
+  finally{setBusy(false);renderPhotos()}
  };
- $('preview-vehicle').onclick=()=>{if(!form.reportValidity())return;try{const v=read(),box=$('admin-preview');box.replaceChildren();const image=document.createElement('img');image.src=v.image_url||publicURL(v.r2_key);image.alt=v.name;image.onerror=()=>{image.remove();say('Photo could not be loaded. Check its public R2 URL.')};const p=document.createElement('p');p.textContent=`${v.year} ${v.name} · ${v.color} · ${v.price_krw?'₩'+v.price_krw.toLocaleString('en-US'):'Price unverified'} · ${v.description}`;box.append(image,p);box.hidden=false}catch(error){say(error.message)}};
+ $('preview-vehicle').onclick=()=>{if(!form.reportValidity())return;try{const v=read(),box=$('admin-preview');box.replaceChildren();const image=document.createElement('img');image.src=photos[0].preview||v.image_url||publicURL(v.r2_key);image.alt=v.name;image.onerror=()=>{image.remove();say('Photo could not be loaded. Try selecting it again.')};const p=document.createElement('p');p.textContent=`${v.year} ${v.name} · ${v.color} · ${v.price_krw?'₩'+v.price_krw.toLocaleString('en-US'):'Price unverified'} · ${v.description}`;box.append(image,p);box.hidden=false}catch(error){say(error.message)}};
  async function loadMembers(){if(!app.state.owner)return;const {data,error}=await app.requireClient().rpc('usedcar_list_members',{page_number:pageNumber});if(!app.state.owner)return;if(error)throw error;$('member-rows').replaceChildren();
   for(const member of data){const row=document.createElement('tr');row.innerHTML=`<td>${escapeHTML(member.full_name)}<br>${escapeHTML(member.email)}${member.confirmed?'':'<br>Email not confirmed'}</td><td>${escapeHTML(member.region)}</td><td>${escapeHTML(member.role==='owner'?'Korean owner':member.role==='admin'?'Myanmar order manager':'Member')}</td><td></td>`;
    if(member.role!=='owner'&&member.confirmed){const button=document.createElement('button');button.type='button';button.className='button outline';button.textContent=member.role==='admin'?'Remove order manager':'Make order manager';button.onclick=async()=>{if(!confirm(`${button.textContent}: ${member.full_name}?`))return;button.disabled=true;try{const {error}=await app.requireClient().rpc('usedcar_set_member_admin',{target_user:member.id,make_admin:member.role!=='admin'});if(error)throw error;await loadMembers();$('members-feedback').textContent='Member permissions updated.'}catch(error){$('members-feedback').textContent=error.message}finally{button.disabled=false}};row.lastElementChild.append(button)}$('member-rows').append(row)
