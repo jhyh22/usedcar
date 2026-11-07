@@ -49,7 +49,7 @@
 <p id="member-information" hidden></p>
 <form id="account-form">
 <label>Email<input id="account-email" name="email" type="email" maxlength="254" required autocomplete="email"></label>
-<label>Password<input id="account-password" name="password" type="password" maxlength="128" required autocomplete="current-password"></label>
+<label>Password<input id="account-password" name="password" type="password" maxlength="128" required autocomplete="current-password"><button id="toggle-password" type="button" class="password-link" aria-controls="account-password" aria-pressed="false">Show password · 비밀번호 보기</button></label>
 <fieldset id="signup-fields" disabled hidden>
 <label>Member ID<input id="account-username" name="username" pattern="[a-z0-9_]{3,30}" title="3–30 lowercase letters, numbers or underscores" minlength="3" maxlength="30" required autocomplete="username" placeholder="e.g. ssjj"></label>
 <label>Full name<input id="account-name" name="full_name" required maxlength="100" autocomplete="name"></label>
@@ -297,4 +297,19 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
  window.addEventListener('cloud-auth-change',update);update();
 })();
 
-</script></body></html>
+</script><script>
+(() => {
+ const input=document.getElementById('account-password');
+ const button=document.getElementById('toggle-password');
+ const conceal=()=>{input.type='password';button.setAttribute('aria-pressed','false');button.textContent='Show password · 비밀번호 보기'};
+ button.addEventListener('click',()=>{
+  const show=input.type==='password';input.type=show?'text':'password';
+  button.setAttribute('aria-pressed',String(show));
+  button.textContent=show?'Hide password · 비밀번호 숨기기':'Show password · 비밀번호 보기';
+ });
+ input.form.addEventListener('reset',conceal);
+ input.form.addEventListener('submit',conceal);
+ document.getElementById('account-dialog').addEventListener('close',conceal);
+})();
+</script>
+</body></html>
